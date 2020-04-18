@@ -7,6 +7,11 @@
   <div class="container">
     <b>
       <h1>
+        <input type="button"  (click)="clear()"  value="C" style="width: 74%;color:#cc370b;">
+        <input type="button"  (click)='condition("/")' value="/" style="width: 24%;">
+        
+      </h1>
+      <h1>
         <input type="button"  (click)='entervalue("1")' value="1">
         <input type="button"  (click)='entervalue("2")' value="2">
         <input type="button"  (click)='entervalue("3")' value="3">
@@ -27,11 +32,7 @@
       <h1>
         <input type="button"  (click)='entervalue("0")' value="0" style="width: 49%;">
         <input type="button"  (click)='decimal(".")' value=".">
-        <input type="button"  (click)='condition("/")' value="/">
-      </h1>
-      <h1>
-        <input type="button"  (click)="clear()"  class="azul"value="C" style="width: 49%;">
-        <input type="button"  (click)='condition("=")' class="azul" value="=" style="width: 49%;">
+        <input type="button"  (click)='condition("=")' class="igual" value="=">        
       </h1>
     </b>
   </div>

@@ -5,17 +5,19 @@
     border-radius: 10px;
     margin: 2px;
     font-size: xx-large;
-    background: red;
+    background: #000;
 }
-.container input.azul{
-    background: #1a5cf1;
+.container input.igual{
+    background: #cc370b;
 }
 .calculator input{
     width: 410px;
-    height: 55;
+    height: 50px;
     border-radius: 8px;
-    border:3px dotted rebeccapurple;
-    background-color: lightcyan;
+    margin-bottom: 6px;
+    padding-left: 14px;
+    border: none;
+    background-color:#e6e6e6;
     font-size: xx-large;
 }
 .full{
@@ -24,5 +26,5 @@
     padding: 12px;
     width: 417px;
     border-radius: 20px;
-
 }
+h1{margin:0}

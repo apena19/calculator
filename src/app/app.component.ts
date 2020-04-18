@@ -13,13 +13,12 @@ export class AppComponent  {
     beforeOperation = '';
     newOperacion = '';
 
-    entervalue(v: string) {
+    entervalue(value: string) {
         if (this.numberState) {
-            this.current = v;
+            this.current = value;
             this.numberState = false;
         } else {
-            this.current === '0' ? this.current = v : this.current += v;
-
+            this.current === '0' ? this.current = value : this.current += value;
         }
     }
 
@@ -45,7 +44,7 @@ export class AppComponent  {
                 this.beforeOperation = this.current;
                 this.current = String(result);
             } else {
-                alert("No es valida la operacion");
+                alert("operacion invalida");
                 this.clear();
             }
 
