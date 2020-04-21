@@ -39,7 +39,6 @@ export class AppComponent  {
         if (inputChar == "=") {
             const ultimoC = this.current.charAt(this.current.length - 1);
             var re = new RegExp("([0-9])");
-
             if (re.test(ultimoC)) {
                 const result = eval(this.current);
                 this.beforeOperation = this.current;
@@ -99,7 +98,6 @@ export class AppComponent  {
         if (op == "=") {
             const ultimoC = this.current.charAt(this.current.length - 1);
             var re = new RegExp("([0-9])");
-
             if (re.test(ultimoC)) {
                 const result = eval(this.current);
                 this.beforeOperation = this.current;
