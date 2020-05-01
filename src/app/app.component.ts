@@ -65,10 +65,20 @@ export class AppComponent  {
             }
         //si la opreacion es diferente al = osea (+, -, *, /)
         }else{
-            // concatenamos el simbolo de operacion a la cadena matematica
-            this.current += op
-            // habilitamos el uso del punto decimal
-            this.estadoDecimal = true;
+            //optenemos el ultimo digito en la cadena de la operacion matematicar
+            const lastDig = this.current.charAt(this.current.length - 1);
+            console.log(lastDig);
+            //validamos que no sea una operacion matematica mediante expresion regular
+            var reg = new RegExp("([0-9])");
+            if(reg.test(lastDig) ){
+                // concatenamos el simbolo de operacion a la cadena matematica
+                this.current += op
+                // habilitamos el uso del punto decimal
+                this.estadoDecimal = true;
+            }else{
+                //mandamos una alerta y no se concatena la operacion presionada
+                alert("Opreacion invalidad");
+            }
         }
     }
 
