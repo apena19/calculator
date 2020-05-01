@@ -1,38 +1,38 @@
 <div class="full">
+  <!– pantalla de resultados de la calculadora —>
   <div class="calculator">
     <input type="text" class="pantalla-calculadora" [value]="beforeOperation" disabled />
     <input type="text" class="pantalla-calculadora" [value]="current" disabled /> 
   </div>
-  
+  <!– container de botones para calculadora —>
   <div class="container">
     <b>
       <h1>
         <input type="button"  (click)="clear()"  value="C" style="width: 74%;color:#cc370b;">
-        <input type="button"  (click)='condition("/")' value="/" style="width: 24%;">
-        
+        <input type="button"  (click)='opereracion("/")' value="/" style="width: 24%;">
       </h1>
       <h1>
-        <input type="button"  (keypress)="keyPressNum($event)" (click)='entervalue("1")' value="1">
-        <input type="button"  (keypress)="keyPressNum($event)" (click)='entervalue("2")' value="2">
-        <input type="button"  (keypress)="keyPressNum($event)" (click)='entervalue("3")' value="3">
-        <input type="button"  (keypress)="keyPressOperator($event)" (click)='condition("+")' value="+">
+        <input type="button"   (click)='numero("1")' value="1">
+        <input type="button"   (click)='numero("2")' value="2">
+        <input type="button"   (click)='numero("3")' value="3">
+        <input type="button"   (click)='opereracion("+")' value="+">
       </h1>
       <h1>
-        <input type="button"  (keypress)="keyPressNum($event)" (click)='entervalue("4")' value="4">
-        <input type="button"  (keypress)="keyPressNum($event)" (click)='entervalue("5")' value="5">
-        <input type="button"  (keypress)="keyPressNum($event)" (click)='entervalue("6")' value="6">
-        <input type="button"  (keypress)="keyPressOperator($event)" (click)='condition("-")' value="-">
+        <input type="button"   (click)='numero("4")' value="4">
+        <input type="button"   (click)='numero("5")' value="5">
+        <input type="button"   (click)='numero("6")' value="6">
+        <input type="button"   (click)='opereracion("-")' value="-">
       </h1>
       <h1>
-        <input type="button"  (keypress)="keyPressNum($event)" (click)='entervalue("7")' value="7">
-        <input type="button"  (keypress)="keyPressNum($event)" (click)='entervalue("8")' value="8">
-        <input type="button"  (keypress)="keyPressNum($event)" (click)='entervalue("9")' value="9">
-        <input type="button"  (keypress)="keyPressOperator($event)" (click)='condition("*")' value="*">
+        <input type="button"   (click)='numero("7")' value="7">
+        <input type="button"   (click)='numero("8")' value="8">
+        <input type="button"   (click)='numero("9")' value="9">
+        <input type="button"   (click)='opereracion("*")' value="*">
       </h1>
       <h1>
-        <input type="button"  (keypress)="keyPressNum($event)" (click)='entervalue("0")' value="0" style="width: 49%;">
-        <input type="button"  (keypress)="keyPressPunto($event)" (click)='decimal(".")' value=".">
-        <input type="button"  (keypress)="keyPressOperator($event)" (click)='condition("=")' class="igual" value="=">        
+        <input type="button"   (click)='numero("0")' value="0" style="width: 49%;">
+        <input type="button"   (click)='decimal()' value=".">
+        <input type="button"   (click)='opereracion("=")' class="igual" value="=">        
       </h1>
     </b>
   </div>

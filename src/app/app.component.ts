@@ -5,119 +5,78 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  {
-  title = 'calculadora';
-
+    title = 'calculadora';
+    //variables de almacenamiento y control
     current = '0';
-    numberState = false;
     estadoDecimal = false;
     beforeOperation = '';
     newOperacion = '';
 
-    keyPressNum(event: any) {
-      const pattern = /[0-9]/;
-      const inputChar = String.fromCharCode((event as KeyboardEvent).charCode);
-      if (!pattern.test(inputChar)) {  
-          event.preventDefault();
-      }
-      else{
-        if (this.numberState) {
-            this.current = inputChar;
-            this.numberState = false;
-        } else {
-            this.current === '0' ? this.current = inputChar : this.current += inputChar;
-        }
-      }
-    }
-
-    keyPressOperator(event: any) {
-      const pattern = /[-,+,*,/]/;
-      const inputChar = String.fromCharCode((event as KeyboardEvent).charCode);
-      if (!pattern.test(inputChar)) {  
-          event.preventDefault();
-      }
-      else{
-        if (inputChar == "=") {
-            const ultimoC = this.current.charAt(this.current.length - 1);
-            var re = new RegExp("([0-9])");
-            if (re.test(ultimoC)) {
-                const result = eval(this.current);
-                this.beforeOperation = this.current;
-                this.current = String(result);
-            } else {
-                alert("operacion invalida");
-                this.clear();
-            }
-
-        }else{
-            this.current += inputChar
-            this.estadoDecimal = true;
-        }
-      }
-    }
-
-    keyPressPunto(event: any) {
-      const pattern = /[.]/;
-      const inputChar = String.fromCharCode((event as KeyboardEvent).charCode);
-      if (!pattern.test(inputChar)) {  
-          event.preventDefault();
-      }
-      else{
-        if (!this.current.includes('.')) {
-            this.current += '.';
-        } else {
-            if (this.estadoDecimal) {
-                this.current += '.';
-                this.estadoDecimal = false;
-            }
-        }
-      }
-    }
-
-    entervalue(value: string) {
-        if (this.numberState) {
+    //funcion que captura cada numero presionado en la calculadora y lo agrega a la cadena de la operacion (current)
+    //parametros: el numero presionado
+    //return void
+    numero( value ) {
+        if(this.current === '0'){
             this.current = value;
-            this.numberState = false;
-        } else {
-            this.current === '0' ? this.current = value : this.current += value;
+        }else{
+            this.current += value;
         }
     }
 
+    //funcion que agrega el punto decimal 
+    //parametros: 
+    //return void
     decimal() {
+        //validamos si es el primer punto decimal en la cadena matematica
         if (!this.current.includes('.')) {
             this.current += '.';
         } else {
+            //validamos que la variable de control decimal sea true
             if (this.estadoDecimal) {
                 this.current += '.';
+                //deshabilitamos la variable de control de punto decimal hasta presionar otra opreacion
                 this.estadoDecimal = false;
             }
         }
     }
 
-    condition(op: string) {
-
+    // funcion que captura cada operacion matematica presionada en la calculadora
+    // parametros: la operacion de tipo string 
+    // return void
+    opereracion(op) {
+        //si la operacion presionada es el = 
         if (op == "=") {
+            //optenemos el ultimo digito en la cadena de la operacion a calcular
             const ultimoC = this.current.charAt(this.current.length - 1);
+            //creamos una variable de expresion regular
             var re = new RegExp("([0-9])");
+            //validamos si el ultimo digito en la cadena matematica es un numero
+            //para verificar que sea una operacion valida completa
             if (re.test(ultimoC)) {
+                //evaluemos la cadena matematica con la funcion eval
                 const result = eval(this.current);
+                //seteamos las variables que se muestran en la pantalla de resultados
                 this.beforeOperation = this.current;
                 this.current = String(result);
             } else {
+                //mandamos error por operacion invalida o incompleta
                 alert("operacion invalida");
                 this.clear();
             }
-
+        //si la opreacion es diferente al = osea (+, -, *, /)
         }else{
+            // concatenamos el simbolo de operacion a la cadena matematica
             this.current += op
+            // habilitamos el uso del punto decimal
             this.estadoDecimal = true;
         }
-
     }
 
+    // funcion que limpia las variables de almacenamiento de datos en la calculadora
+    // parametros:  
+    // return void
     clear() {
         this.current = '0';
         this.beforeOperation = '';
-        this.numberState = false;
     }
-
 }
