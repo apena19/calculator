@@ -9,6 +9,8 @@ export class AppComponent  {
     //variables de almacenamiento y control
     current = '0';
     estadoDecimal = false;
+    divicion = false;
+    divicionNull = false;
     beforeOperation = '';
     newOperacion = '';
 
@@ -19,6 +21,16 @@ export class AppComponent  {
         if(this.current === '0'){
             this.current = value;
         }else{
+            //validamos el estado de la  variable de control de divicion sea true 
+            if(this.divicion){
+                //preguntamos si el numero presionado es 0 
+                if(value == '0' ){
+                    //seteamos la variable de control de divicion nula
+                    this.divicionNull = true;
+                }
+                //cambiamos el control de operacion divicion pues el primer digito es diferente de 0
+                this.divicion = false;
+            }
             this.current += value;
         }
     }
@@ -46,28 +58,37 @@ export class AppComponent  {
     opereracion(op) {
         //si la operacion presionada es el = 
         if (op == "=") {
-            //optenemos el ultimo digito en la cadena de la operacion a calcular
-            const ultimoC = this.current.charAt(this.current.length - 1);
-            //creamos una variable de expresion regular
-            var re = new RegExp("([0-9])");
-            //validamos si el ultimo digito en la cadena matematica es un numero
-            //para verificar que sea una operacion valida completa
-            if (re.test(ultimoC)) {
-                //evaluemos la cadena matematica con la funcion eval
-                const result = eval(this.current);
-                //seteamos las variables que se muestran en la pantalla de resultados
-                this.beforeOperation = this.current;
-                this.current = String(result);
-            } else {
-                //mandamos error por operacion invalida o incompleta
-                alert("operacion invalida");
+            //validamos que no exista una divicion nula (/0) 
+            if(!this.divicionNull){
+                //optenemos el ultimo digito en la cadena de la operacion a calcular
+                const ultimoC = this.current.charAt(this.current.length - 1);
+                //creamos una variable de expresion regular
+                var re = new RegExp("([0-9])");
+                //validamos si el ultimo digito en la cadena matematica es un numero
+                //para verificar que sea una operacion valida completa
+                if (re.test(ultimoC)) {
+                    //evaluemos la cadena matematica con la funcion eval
+                    const result = eval(this.current);
+                    //seteamos las variables que se muestran en la pantalla de resultados
+                    this.beforeOperation = this.current;
+                    this.current = String(result);
+                } else {
+                    //mandamos error por operacion invalida o incompleta
+                    alert("operacion invalida");
+                    this.clear();
+                }
+            }else{
+                alert("operacion invalida por divicion nula");
                 this.clear();
             }
-        //si la opreacion es diferente al = osea (+, -, *, /)
+        //si la opreacion es diferente al = 
         }else{
+             //verificamos si la operecion matematica es % para controlar la divicion null
+             if(op == '/'){
+                 this.divicion = true;
+             }
             //optenemos el ultimo digito en la cadena de la operacion matematicar
             const lastDig = this.current.charAt(this.current.length - 1);
-            console.log(lastDig);
             //validamos que no sea una operacion matematica mediante expresion regular
             var reg = new RegExp("([0-9])");
             if(reg.test(lastDig) ){
