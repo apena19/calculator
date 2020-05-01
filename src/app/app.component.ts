@@ -8,11 +8,10 @@ export class AppComponent  {
     title = 'calculadora';
     //variables de almacenamiento y control
     current = '0';
-    estadoDecimal = false;
+    estadoDecimal = true;
     divicion = false;
     divicionNull = false;
     beforeOperation = '';
-    newOperacion = '';
 
     //funcion que captura cada numero presionado en la calculadora y lo agrega a la cadena de la operacion (current)
     //parametros: el numero presionado
@@ -27,9 +26,12 @@ export class AppComponent  {
                 if(value == '0' ){
                     //seteamos la variable de control de divicion nula
                     this.divicionNull = true;
+                }else{
+                    const last = this.current.charAt(this.current.length - 1);
+                    if(last == "."){
+                        this.divicionNull = false;
+                    }
                 }
-                //cambiamos el control de operacion divicion pues el primer digito es diferente de 0
-                this.divicion = false;
             }
             this.current += value;
         }
@@ -42,6 +44,7 @@ export class AppComponent  {
         //validamos si es el primer punto decimal en la cadena matematica
         if (!this.current.includes('.')) {
             this.current += '.';
+            this.estadoDecimal = false;
         } else {
             //validamos que la variable de control decimal sea true
             if (this.estadoDecimal) {
@@ -57,7 +60,7 @@ export class AppComponent  {
     // return void
     opereracion(op) {
         //si la operacion presionada es el = 
-        if (op == "=") {
+        if(op == "=") {
             //validamos que no exista una divicion nula (/0) 
             if(!this.divicionNull){
                 //optenemos el ultimo digito en la cadena de la operacion a calcular
@@ -83,10 +86,12 @@ export class AppComponent  {
             }
         //si la opreacion es diferente al = 
         }else{
-             //verificamos si la operecion matematica es % para controlar la divicion null
-             if(op == '/'){
-                 this.divicion = true;
-             }
+             //verificamos si la operecion matematica es / para controlar la divicion null
+            if(op == '/'){
+                this.divicion = true;
+            }else{
+                this.divicion = false;
+            }
             //optenemos el ultimo digito en la cadena de la operacion matematicar
             const lastDig = this.current.charAt(this.current.length - 1);
             //validamos que no sea una operacion matematica mediante expresion regular
@@ -109,5 +114,7 @@ export class AppComponent  {
     clear() {
         this.current = '0';
         this.beforeOperation = '';
+        this.divicionNull = false;
+        this.estadoDecimal = true;
     }
 }
