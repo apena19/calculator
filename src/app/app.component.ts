@@ -17,7 +17,7 @@ export class AppComponent  {
     //funcion que captura cada numero presionado en la calculadora y lo agrega a la cadena de la operacion (current)
     //parametros: el numero presionado
     //return void
-    numero( value ) {
+    numbers( value ) {
         if( this.validateNumber() || ( this.validateNumber() && this.current === '0' ) ){
             if(this.cantNum < 10){
                 this.cantNum++;
@@ -64,7 +64,7 @@ export class AppComponent  {
     // funcion que captura cada operacion matematica presionada en la calculadora
     // parametros: la operacion de tipo string 
     // return void
-    opereracion(op) {
+    operations(op) {
         //si la operacion presionada es el = 
         if(op == "=") {
             //validamos que no exista una divicion nula (/0) 
