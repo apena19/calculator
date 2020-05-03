@@ -8,32 +8,39 @@ export class AppComponent  {
     title = 'calculadora';
     //variables de almacenamiento y control
     current = '0';
-    estadoDecimal = true;
+    decimalState = true;
     divicion = false;
     divicionNull = false;
     beforeOperation = '';
+    cantNum = 0;
 
     //funcion que captura cada numero presionado en la calculadora y lo agrega a la cadena de la operacion (current)
     //parametros: el numero presionado
     //return void
     numero( value ) {
+        if( this.validateNumber() || ( this.validateNumber() && this.current === '0' ) ){
+            if(this.cantNum < 10){
+                this.cantNum++;
+            }      
+        }
         if(this.current === '0'){
             this.current = value;
         }else{
             //validamos el estado de la  variable de control de divicion sea true 
             if(this.divicion){
-                //preguntamos si el numero presionado es 0 
                 if(value == '0' ){
-                    //seteamos la variable de control de divicion nula
                     this.divicionNull = true;
                 }else{
                     const last = this.current.charAt(this.current.length - 1);
                     if(last == "."){
                         this.divicionNull = false;
                     }
+                    this.divicion = false;
                 }
             }
-            this.current += value;
+            if(this.cantNum < 10){
+                this.current += value;
+            }
         }
     }
 
@@ -44,13 +51,12 @@ export class AppComponent  {
         //validamos si es el primer punto decimal en la cadena matematica
         if (!this.current.includes('.')) {
             this.current += '.';
-            this.estadoDecimal = false;
+            this.decimalState = false;
         } else {
             //validamos que la variable de control decimal sea true
-            if (this.estadoDecimal) {
+            if (this.decimalState) {
                 this.current += '.';
-                //deshabilitamos la variable de control de punto decimal hasta presionar otra opreacion
-                this.estadoDecimal = false;
+                this.decimalState = false;
             }
         }
     }
@@ -63,20 +69,11 @@ export class AppComponent  {
         if(op == "=") {
             //validamos que no exista una divicion nula (/0) 
             if(!this.divicionNull){
-                //optenemos el ultimo digito en la cadena de la operacion a calcular
-                const ultimoC = this.current.charAt(this.current.length - 1);
-                //creamos una variable de expresion regular
-                var re = new RegExp("([0-9])");
-                //validamos si el ultimo digito en la cadena matematica es un numero
-                //para verificar que sea una operacion valida completa
-                if (re.test(ultimoC)) {
-                    //evaluemos la cadena matematica con la funcion eval
+                if (this.validateNumber()) {
                     const result = eval(this.current);
-                    //seteamos las variables que se muestran en la pantalla de resultados
                     this.beforeOperation = this.current;
-                    this.current = String(result);
+                    this.current = String(result.toFixed(2));
                 } else {
-                    //mandamos error por operacion invalida o incompleta
                     alert("operacion invalida");
                     this.clear();
                 }
@@ -86,25 +83,32 @@ export class AppComponent  {
             }
         //si la opreacion es diferente al = 
         }else{
-             //verificamos si la operecion matematica es / para controlar la divicion null
+            this.cantNum = 0;
             if(op == '/'){
                 this.divicion = true;
             }else{
                 this.divicion = false;
             }
-            //optenemos el ultimo digito en la cadena de la operacion matematicar
-            const lastDig = this.current.charAt(this.current.length - 1);
-            //validamos que no sea una operacion matematica mediante expresion regular
-            var reg = new RegExp("([0-9])");
-            if(reg.test(lastDig) ){
-                // concatenamos el simbolo de operacion a la cadena matematica
+            if( this.validateNumber() ){
                 this.current += op
-                // habilitamos el uso del punto decimal
-                this.estadoDecimal = true;
+                this.decimalState = true;
             }else{
-                //mandamos una alerta y no se concatena la operacion presionada
                 alert("Opreacion invalidad");
             }
+        }
+    }
+
+    // funcion que valida si el ultimo caracter de la operacion matematica es un numero 0-9
+    // parametros:  
+    // return boolean
+    validateNumber(){
+        var lastVal = this.current.charAt(this.current.length - 1);
+        var re = new RegExp("([0-9])");
+        if (re.test(lastVal)){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
@@ -115,6 +119,7 @@ export class AppComponent  {
         this.current = '0';
         this.beforeOperation = '';
         this.divicionNull = false;
-        this.estadoDecimal = true;
+        this.decimalState = true;
+        this.cantNum = 0;
     }
 }
